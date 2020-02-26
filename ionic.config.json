@@ -1,0 +1,7 @@
+{
+  "name": "OC-Connect",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
