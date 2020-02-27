@@ -9,7 +9,11 @@ const routes: Routes = [
   {
     path: 'create-event',
     loadChildren: () => import('./create-event/create-event.module').then( m => m.CreateEventPageModule)
+  },  {
+    path: 'event-view',
+    loadChildren: () => import('./event-view/event-view.module').then( m => m.EventViewPageModule)
   }
+
 ];
 @NgModule({
   imports: [
