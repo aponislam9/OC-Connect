@@ -1,3 +1,43 @@
-ion-content ion-toolbar {
-  --background: translucent;
+// .picker-button{
+//     color:#fd6e00;
+// }
+
+.content {
+  width: 100%
+
 }
+.input-fields{
+  text-align: left;
+}
+
+.logo{
+  height: 50px;
+  width: 50px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+ion-icon{
+  height:18px;
+  width: 18px;
+  margin-right: 5px;
+}
+
+.ion-no-margin{
+  --color: white;
+  width: 40vw;
+  height: 6vh;
+  display:block;
+  margin-left: auto;
+  margin-right: auto;
+  font-size: 14px;
+  text-transform: uppercase;
+  --border-radius: 40px;
+  margin-top: 50px;
+}
+
+// .input-box{
+//     // --background: gray;
+//     // --border-radius: 20px;
+// }
