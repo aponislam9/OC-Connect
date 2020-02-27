@@ -1,9 +1,54 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>create-event</ion-title>
+    <ion-title>
+      <ion-img class = "logo" src="/assets/logo/oc-connect-logo.png"></ion-img>
+    </ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content fullscreen class = "content">
+  <ion-list class = "input-fields">
 
+    <ion-img src="/assets/img/Dunder_Mifflin.png"></ion-img>
+
+    <ion-item lines = "full">
+      <ion-label position = "stack">Company</ion-label>
+      <ion-input required type="text"></ion-input>
+
+    </ion-item>
+
+    <ion-item lines = "full">
+      <ion-label position="stack">Date</ion-label>
+      <ion-datetime placeholder="Select Date"></ion-datetime>
+    </ion-item>
+      
+    <ion-item lines = "full">
+      <ion-label position="stack">Start Time</ion-label>
+      <ion-datetime display-format="h:mm A" picker-format="h:mm A" placeholder = "Select Time"></ion-datetime>
+    </ion-item>
+
+    <ion-item lines = "full">
+      <ion-label position="stack">End Time</ion-label>
+      <ion-datetime display-format="h:mm A" picker-format="h:mm A" placeholder = "Select Time"></ion-datetime>
+    </ion-item>
+
+    <ion-item lines = "full">
+      <ion-label position="Stack">Location</ion-label>
+      <ion-input ></ion-input>
+    </ion-item>
+    
+    <ion-item lines = "full">
+      <!-- <ion-label position="float">Description</ion-label> -->
+      <ion-textarea placeholder="Enter description for event" class="input-box" rows="6"></ion-textarea>
+    </ion-item>
+  </ion-list>
+
+  
+  <div class="ion-padding">
+    <ion-button type="submit" class="ion-no-margin" shaoe = "round">Create account</ion-button>
+  </div>
+  
+  
 </ion-content>
+
+
