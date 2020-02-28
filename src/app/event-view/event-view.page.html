@@ -1,8 +1,8 @@
-<ion-header [translucent]="true">
+<ion-header>
   <ion-toolbar>
-    <ion-title>
-      Event View Test
-    </ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref=""></ion-back-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
@@ -77,7 +77,7 @@
     </ion-card-content>
 
     <ion-card-content type="button">
-      <ion-button slot="end" class="submit-button" size="default">Submit</ion-button>
+      <ion-button slot="end" class="submit-button" size="default" fill="clear">Submit</ion-button>
     </ion-card-content>
 
   </ion-card>
@@ -97,16 +97,22 @@
     
       <div class="comment-body">
         <div class="comment-text">{{user.commentText}}</div>
-        <div *ngIf="user.subCommentCount > 0" class="other-comments-description">{{user.subCommentCount}} others have commented...</div>
+        <div *ngIf="user.subCommentCount > 0" class="other-comments-description">{{user.subCommentCount}} others have replied...</div>
       </div>
 
       <ion-grid>
         <ion-row>
           <ion-col size="6">
-            <ion-button class="comment-buttons" expand="block">Like</ion-button>
+            <ion-button expand="block" fill="clear" mode="ios">
+              <ion-icon name="happy-outline"></ion-icon>
+              <p class="button-text">Like</p>
+            </ion-button>
           </ion-col>
           <ion-col size="6">
-            <ion-button expand="block">Comment</ion-button>  
+            <ion-button expand="block" fill="clear" mode="ios">
+              <ion-icon name="chatbubble-outline"></ion-icon>
+              <p class="button-text">Comment</p>
+            </ion-button>  
           </ion-col>
         </ion-row>
       </ion-grid>
