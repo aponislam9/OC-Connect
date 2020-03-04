@@ -13,7 +13,11 @@ const routes: Routes = [
   {
     path: 'event-view',
     loadChildren: () => import('./event-view/event-view.module').then( m => m.EventViewPageModule)
+  },  {
+    path: 'comment-view',
+    loadChildren: () => import('./comment-view/comment-view.module').then( m => m.CommentViewPageModule)
   }
+
 
 ];
 @NgModule({
