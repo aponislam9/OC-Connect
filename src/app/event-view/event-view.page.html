@@ -24,66 +24,27 @@
     </ion-card-subtitle>
   </ion-card-header>
 
-<!--
-  <ion-grid fixed>
-    <ion-row>
-      <ion-col size="12">
-        <ion-segment scrollable>
-          <ion-segment-button *ngFor="let hashtag of hashtags" value="{{hashtag}}">
-            <ion-label>{{hashtag}}</ion-label>
-          </ion-segment-button>
-        </ion-segment>
-      </ion-col>
-    </ion-row>
-  </ion-grid>
--->
-
-<!--
-  <div class="hashtag-block">
-    <ion-slides [options]=sliderConfig>
-      <ion-slide *ngFor="let hashtag of hashtags">
-        <ion-chip> <ion-label>{{hashtag}}</ion-label> </ion-chip>
-      </ion-slide>
-    </ion-slides>
-  </div>
--->
-
-<!--
-  <div>
-    <ion-chip *ngFor="let hashtag of hashtags">
-      <ion-label>{{hashtag}}</ion-label>
-    </ion-chip>
-  </div>
--->
-
-<!--
-  https://stackoverflow.com/questions/54413418/ionic-4-horizontal-scroll-with-ngfor/54413592
--->
+  <ion-item-divider>
+    <ion-label>
+    </ion-label>
+  </ion-item-divider>
 
   <div class="hashtag-container">
     <div class="scroll" scrollX="true">
-
       <ion-chip *ngFor="let hashtag of hashtags" outline>
         <ion-label>{{hashtag}}</ion-label>
       </ion-chip>
-
     </div>
   </div>
 
   <ion-card class="submit-comment">
-
     <ion-card-content>
-      <ion-textarea class="comment-field" placeholder="Leave a comment..."> </ion-textarea>
-    </ion-card-content>
-
-    <ion-card-content type="button">
+      <ion-textarea autoGrow class="comment-field" placeholder="Leave a comment..."> </ion-textarea>
       <ion-button slot="end" class="submit-button" size="default" fill="clear">Submit</ion-button>
     </ion-card-content>
-
   </ion-card>
 
     <ion-card *ngFor="let user of userComments">
-
       <ion-item lines="none" >
         <ion-avatar slot="start">
           <img src={{user.picture}}>
@@ -97,7 +58,7 @@
     
       <div class="comment-body">
         <div class="comment-text">{{user.commentText}}</div>
-        <div *ngIf="user.subCommentCount > 0" class="other-comments-description">{{user.subCommentCount}} others have replied...</div>
+        <div *ngIf="user.subCommentCount > 0" class="other-comments-description" (click)="handleCommentClick()">{{user.subCommentCount}} others have replied...</div>
       </div>
 
       <ion-grid>
@@ -109,14 +70,13 @@
             </ion-button>
           </ion-col>
           <ion-col size="6">
-            <ion-button expand="block" fill="clear" mode="ios">
+            <ion-button expand="block" fill="clear" mode="ios" (click)="handleCommentClick()">
               <ion-icon name="chatbubble-outline"></ion-icon>
               <p class="button-text">Comment</p>
             </ion-button>  
           </ion-col>
         </ion-row>
       </ion-grid>
-
     </ion-card>
 
 </ion-content>
