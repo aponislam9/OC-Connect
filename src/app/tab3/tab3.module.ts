@@ -5,6 +5,13 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Tab3Page } from './tab3.page';
 import { ExploreContainerComponentModule } from '../explore-container/explore-container.module';
+import { PopoverController } from '@ionic/angular';
+import { Component } from '@angular/core';
+import { ModalController, NavParams } from '@ionic/angular'
+import { MenuPopoverComponent } from '../menu-popover/menu-popover.component';
+
+
+
 
 @NgModule({
   imports: [
@@ -14,6 +21,7 @@ import { ExploreContainerComponentModule } from '../explore-container/explore-co
     ExploreContainerComponentModule,
     RouterModule.forChild([{ path: '', component: Tab3Page }])
   ],
-  declarations: [Tab3Page]
+  entryComponents: [MenuPopoverComponent],
+  declarations: [Tab3Page, MenuPopoverComponent]
 })
-export class Tab3PageModule {}
+export class Tab3PageModule { }
