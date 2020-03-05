@@ -1,15 +1,20 @@
 // Ionic Variables and Theming. For more info, please see:
 // http://ionicframework.com/docs/theming/
 
+ion-toolbar {
+  --min-height: 0px!important;
+  --background: #fd6e00;
+}
+
 /** Ionic CSS Variables **/
 :root {
   /** primary **/
-  --ion-color-primary: #3880ff;
-  --ion-color-primary-rgb: 56, 128, 255;
-  --ion-color-primary-contrast: #ffffff;
-  --ion-color-primary-contrast-rgb: 255, 255, 255;
-  --ion-color-primary-shade: #3171e0;
-  --ion-color-primary-tint: #4c8dff;
+  --ion-color-primary: #fd6e00;
+  --ion-color-primary-rgb: 253, 110, 0;
+  --ion-color-primary-contrast: #fd6e00;
+  --ion-color-primary-contrast-rgb: 253, 110, 0;
+  --ion-color-primary-shade: #fd6e00;
+  --ion-color-primary-tint: #fd6e00;
 
   /** secondary **/
   --ion-color-secondary: #3dc2ff;
