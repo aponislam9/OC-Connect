@@ -1,17 +1,39 @@
-<ion-header [translucent]="true">
+<ion-header>
   <ion-toolbar>
     <ion-title>
-      Tab 2
+      Event
     </ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Tab 2</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<ion-content fullscreen>
 
-  <app-explore-container name="Tab 2 page"></app-explore-container>
+  <!-- Top 3 Buttons Future, Today, Past -->
+  <ion-segment value ="Today">
+    <ion-segment-button value="Future">
+      <ion-label>Future</ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="Today">
+      <ion-label>Today</ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="Past">
+      <ion-label>Past</ion-label>
+    </ion-segment-button>
+  </ion-segment>
+
+  
+<ion-card (click)="handleCardClick()">
+  <img src ="assets/img/Dunder_Mifflin.png">
+  <ion-card-header>
+    <ion-card-subtitle>One Million Cups presents:</ion-card-subtitle>
+    <ion-card-title>Dunder Mifflin</ion-card-title>
+  </ion-card-header>
+  <ion-card-content>
+    Friday Jan 31 - 8:00AM 
+  </ion-card-content>
+  <ion-card-content>
+    5141 California Ave #250, Irvine Ca 92617
+  </ion-card-content>
+</ion-card>
+
 </ion-content>

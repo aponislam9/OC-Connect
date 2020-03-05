@@ -1,0 +1,82 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref=""></ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="event-container">
+
+  <ion-img class="event-banner" src="assets/img/Dunder_Mifflin.png"></ion-img>
+
+  <ion-card-header class="event-header">
+    <ion-card-title>{{eventDetails.title}}</ion-card-title>
+    
+    <ion-card-subtitle>
+      <ion-icon class="icon" name="calendar-outline"></ion-icon>
+      <span class="text">{{eventDetails.time}}, {{eventDetails.date}}</span>
+    </ion-card-subtitle>
+
+    <ion-card-subtitle>
+      <ion-icon class="icon" name="map-outline"></ion-icon>
+      <span class="text">{{eventDetails.location}}</span>
+    </ion-card-subtitle>
+  </ion-card-header>
+
+  <ion-item-divider>
+    <ion-label>
+    </ion-label>
+  </ion-item-divider>
+
+  <div class="hashtag-container">
+    <div class="scroll" scrollX="true">
+      <ion-chip *ngFor="let hashtag of hashtags" outline>
+        <ion-label>{{hashtag}}</ion-label>
+      </ion-chip>
+    </div>
+  </div>
+
+  <ion-card class="submit-comment">
+    <ion-card-content>
+      <ion-textarea autoGrow class="comment-field" placeholder="Leave a comment..."> </ion-textarea>
+      <ion-button slot="end" class="submit-button" size="default" fill="clear">Submit</ion-button>
+    </ion-card-content>
+  </ion-card>
+
+    <ion-card *ngFor="let user of userComments">
+      <ion-item lines="none" >
+        <ion-avatar slot="start">
+          <img src={{user.picture}}>
+        </ion-avatar>
+        
+        <ion-label class="comment-user-profile">
+          <h3>{{user.name}}</h3>
+          <p>{{user.commentTime}}</p>
+        </ion-label>
+      </ion-item>
+    
+      <div class="comment-body">
+        <div class="comment-text">{{user.commentText}}</div>
+        <div *ngIf="user.subCommentCount > 0" class="other-comments-description" (click)="handleCommentClick()">{{user.subCommentCount}} others have replied...</div>
+      </div>
+
+      <ion-grid>
+        <ion-row>
+          <ion-col size="6">
+            <ion-button expand="block" fill="clear" mode="ios">
+              <ion-icon name="happy-outline"></ion-icon>
+              <p class="button-text">Like</p>
+            </ion-button>
+          </ion-col>
+          <ion-col size="6">
+            <ion-button expand="block" fill="clear" mode="ios" (click)="handleCommentClick()">
+              <ion-icon name="chatbubble-outline"></ion-icon>
+              <p class="button-text">Comment</p>
+            </ion-button>  
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-card>
+
+</ion-content>
