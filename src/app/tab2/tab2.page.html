@@ -1,7 +1,7 @@
 <ion-header>
   <ion-toolbar>
     <ion-title>
-      Event
+        <ion-img class = "logo" src="/assets/logo/oc-connect-logo.png"></ion-img>
     </ion-title>
   </ion-toolbar>
 </ion-header>
@@ -10,7 +10,7 @@
 
   <!-- Top 3 Buttons Future, Today, Past -->
   <ion-segment value ="Today">
-    <ion-segment-button value="Future">
+    <ion-segment-button value="Future" (click) = future()>
       <ion-label>Future</ion-label>
     </ion-segment-button>
     <ion-segment-button value="Today">
@@ -35,5 +35,9 @@
     5141 California Ave #250, Irvine Ca 92617
   </ion-card-content>
 </ion-card>
+
+<ion-card>
+  <img src ="assets/img/Another Company.png">
+
 
 </ion-content>
