@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { Storage } from '@ionic/storage';
 
 @Component({
   selector: 'app-tab2',
@@ -8,7 +9,7 @@ import { Router } from '@angular/router';
 })
 export class Tab2Page {
 
-  constructor(private router: Router) {}
+  constructor(private router: Router, private storage: Storage) {}
 
   handleCardClick() {
     this.router.navigateByUrl('/event-view');

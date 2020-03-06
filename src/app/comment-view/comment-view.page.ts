@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Storage } from '@ionic/storage';
 
 @Component({
   selector: 'app-comment-view',
@@ -39,8 +40,8 @@ export class CommentViewPage implements OnInit {
     subCommentCount: 3
   }
 
-  constructor() { }
-
+  constructor(private storage: Storage) { }
+  
   ngOnInit() {
   }
 
