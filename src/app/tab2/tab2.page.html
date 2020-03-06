@@ -1,4 +1,4 @@
-<ion-header [translucent]="true">
+<ion-header>
   <ion-toolbar>
     <ion-title>
         <ion-img class = "logo" src="/assets/logo/oc-connect-logo.png"></ion-img>
@@ -22,7 +22,7 @@
   </ion-segment>
 
   
-<ion-card>
+<ion-card (click)="handleCardClick()">
   <img src ="assets/img/Dunder_Mifflin.png">
   <ion-card-header>
     <ion-card-subtitle>One Million Cups presents:</ion-card-subtitle>
@@ -38,20 +38,6 @@
 
 <ion-card>
   <img src ="assets/img/Another Company.png">
-  <ion-card-header>
-    <ion-card-subtitle>One Million Cups presents:</ion-card-subtitle>
-    <ion-card-title>Opportunity Campus</ion-card-title>
-  </ion-card-header>
-  <ion-card-content>
-    Friday Jan 31 - 8:00AM 
-  </ion-card-content>
-  <ion-card-content>
-    5141 California Ave #250, Irvine Ca 92617
-  </ion-card-content>
-</ion-card>
+
 
 </ion-content>
-
-
-
-

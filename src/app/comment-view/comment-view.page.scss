@@ -1,0 +1,51 @@
+.comment-body {
+    padding-left: 4.5%;
+    padding-right: 4.5%;
+}
+
+.comment-text {
+    padding-bottom: 4%;
+    color: #737373;
+    font-size: 16px;
+}
+
+.comment-count-text {
+    color: #737373;
+    font-size: 16px;
+}
+
+.sub-comment-text {
+    padding-bottom: 4.5%;
+}
+
+.button-text {
+    padding-left: 6%;
+}
+
+
+ion-avatar.comment-root-avatar {
+    min-width: 50px;
+    min-height: 50px;
+}
+
+.comment-name {
+    font-size: 16px;
+
+}
+
+.comment-header {
+    padding-top: 2%;
+}
+
+.submit-button {
+    padding-left: 70%;
+  }  
+
+ion-item-divider{
+    min-height: 1px;
+    max-height: 1px;
+}
+
+.comment-field {
+    padding-bottom: 0%;
+}

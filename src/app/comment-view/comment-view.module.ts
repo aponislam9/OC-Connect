@@ -4,19 +4,17 @@ import { FormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
 
-import { EventViewPageRoutingModule } from './event-view-routing.module';
+import { CommentViewPageRoutingModule } from './comment-view-routing.module';
 
-import { EventViewPage } from './event-view.page';
+import { CommentViewPage } from './comment-view.page';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    EventViewPageRoutingModule
+    CommentViewPageRoutingModule
   ],
-  declarations: [EventViewPage]
+  declarations: [CommentViewPage]
 })
-export class EventViewPageModule {
-
-}
+export class CommentViewPageModule {}
