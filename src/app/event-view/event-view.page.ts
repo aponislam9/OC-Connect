@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Storage } from '@ionic/storage';
 
+import { SignInModalPage } from '../sign-in-modal/sign-in-modal.page';
+import { ModalController } from '@ionic/angular';
+
 @Component({
   selector: 'app-event-view',
   templateUrl: './event-view.page.html',
@@ -9,12 +12,32 @@ import { Storage } from '@ionic/storage';
 })
 export class EventViewPage implements OnInit {
 
-  constructor(private router: Router, private storage: Storage) {}
+  signed_in: false;
+
+  constructor(
+    private router: Router,
+    private storage: Storage,
+    private modalController: ModalController) {}
 
   handleCommentClick() {
-    this.router.navigateByUrl('/comment-view');
+    if (this.signed_in) {
+      this.router.navigateByUrl('/comment-view');
+
+    } else {
+      this.openModal()
+    }
   }
 
+
+  async openModal() {
+    const modal = await this.modalController.create({
+      component: SignInModalPage,
+      // componentProps: {
+      //   custom_id: this.value
+      // }
+    });
+    modal.present();
+  }
 
   eventDetails = {
     title: "1 Million Cups: Wing Pitch",
