@@ -1,7 +1,8 @@
 {
   "name": "OC-Connect",
   "integrations": {
-    "capacitor": {}
+    "capacitor": {},
+    "cordova": {}
   },
   "type": "angular"
 }

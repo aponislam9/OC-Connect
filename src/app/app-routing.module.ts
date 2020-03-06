@@ -16,6 +16,10 @@ const routes: Routes = [
   },  {
     path: 'comment-view',
     loadChildren: () => import('./comment-view/comment-view.module').then( m => m.CommentViewPageModule)
+  },
+  {
+    path: 'sign-in-modal',
+    loadChildren: () => import('./sign-in-modal/sign-in-modal.module').then( m => m.SignInModalPageModule)
   }
 
 

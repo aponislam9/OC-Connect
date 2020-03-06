@@ -1,0 +1,43 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>
+        <ion-img class = "logo" src="/assets/logo/oc-connect-logo.png"></ion-img>
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <form>
+    <div class="email">
+      <label for="email">EMAIL</label>
+      <br>
+      <input class="emailBox" type="text">
+    </div>
+
+    <div class="password">
+      <label for="password">PASSWORD</label>
+      <br>
+      <input class="passBox" type="text">
+    </div>
+
+  </form>
+  <div class="signInBtn">
+    <ion-button color="new">Sign in</ion-button>
+  </div>
+
+  <div class="signGuestBtn">
+    <ion-button color="new">Continue as guest</ion-button>
+  </div>
+
+
+</ion-content>
+
+<ion-footer>
+  <ion-toolbar>
+    <div>
+      <ion-button expand="full" color="new" (click)="closeModal()">Close</ion-button>
+    </div>
+
+  </ion-toolbar>
+</ion-footer>

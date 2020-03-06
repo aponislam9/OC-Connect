@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Storage } from '@ionic/storage';
 
 @Component({
   selector: 'app-create-event',
@@ -7,7 +8,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CreateEventPage implements OnInit {
 
-  constructor() { }
+  constructor(private storage: Storage) { }
 
   ngOnInit() {
   }
