@@ -1,7 +1,7 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
     <ion-title>
-      Event
+        <ion-img class = "logo" src="/assets/logo/oc-connect-logo.png"></ion-img>
     </ion-title>
   </ion-toolbar>
 </ion-header>
@@ -10,7 +10,7 @@
 
   <!-- Top 3 Buttons Future, Today, Past -->
   <ion-segment value ="Today">
-    <ion-segment-button value="Future">
+    <ion-segment-button value="Future" (click) = future()>
       <ion-label>Future</ion-label>
     </ion-segment-button>
     <ion-segment-button value="Today">
@@ -37,10 +37,10 @@
 </ion-card>
 
 <ion-card>
-  <img src ="assets/img/Dunder_Mifflin.png">
+  <img src ="assets/img/Another Company.png">
   <ion-card-header>
     <ion-card-subtitle>One Million Cups presents:</ion-card-subtitle>
-    <ion-card-title>Dunder Mifflin</ion-card-title>
+    <ion-card-title>Opportunity Campus</ion-card-title>
   </ion-card-header>
   <ion-card-content>
     Friday Jan 31 - 8:00AM 
