@@ -1,8 +1,7 @@
 import { Component } from '@angular/core';
-// import { Storage } from '@ionic/storage';
-import { Plugins } from '@capacitor/core';
+import { NativeStorage } from '@ionic-native/native-storage/ngx';
+import {Md5} from 'ts-md5/dist/md5';
 
-const { Storage } = Plugins;
 
 @Component({
   selector: 'app-tab1',
@@ -11,21 +10,23 @@ const { Storage } = Plugins;
 })
 export class Tab1Page {
 
-  constructor() {}
-
+  constructor(private nativeStorage: NativeStorage, private _md5: Md5) {}
   company: string;
   date;
   startTime;
   endTime;
   address: string;
   description: string;
+  eventName: string;
 
   submit() {
-    console.log(this.company);
-    console.log(this.date);
-    console.log(this.startTime);
-    console.log(this.endTime);
-    console.log(this.address);
-    console.log(this.description);
+    let uniqueId = Md5.hashStr(this.eventName);
+    console.log(uniqueId);
+    // console.log(this.company);
+    // console.log(this.date);
+    // console.log(this.startTime);
+    // console.log(this.endTime);
+    // console.log(this.address);
+    // console.log(this.description);
   }
 }
