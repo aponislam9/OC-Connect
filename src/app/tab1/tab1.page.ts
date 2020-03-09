@@ -18,10 +18,13 @@ export class Tab1Page {
   address: string;
   description: string;
   eventName: string;
+  picture;
 
   submit() {
     let uniqueId = Md5.hashStr(this.eventName);
-    console.log(uniqueId);
+    this.nativeStorage.setItem(this.eventName, {id: uniqueId, company: this.company, date: this.date, startTime: this.startTime, address: this.address, description: this.description})
+    this.nativeStorage.getItem(this.eventName).then(data => console.log(data));
+    // console.log(uniqueId);
     // console.log(this.company);
     // console.log(this.date);
     // console.log(this.startTime);
