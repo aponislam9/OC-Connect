@@ -9,56 +9,51 @@
 <ion-content fullscreen class = "content">
   <ion-list class = "input-fields">
 
-<<<<<<< HEAD
-  <app-explore-container name="Tab 1 page"></app-explore-container>
-</ion-content>
-=======
     <ion-img src="/assets/img/Dunder_Mifflin.png"></ion-img>
 
     <ion-item lines = "full">
       <ion-icon name="business-outline"></ion-icon>
       <ion-label position = "stack">Company</ion-label>
-      <ion-input required type="text"></ion-input>
+      <ion-input required type="text" [(ngModel)] = "company"></ion-input>
 
     </ion-item>
 
     <ion-item lines = "full">
       <ion-icon name="calendar-outline"></ion-icon>
       <ion-label position="stack">Date</ion-label>
-      <ion-datetime placeholder="Select Date"></ion-datetime>
+      <ion-datetime placeholder="Select Date" [(ngModel)] = "date"></ion-datetime>
     </ion-item>
       
     <ion-item lines = "full">
       <ion-icon name="time-outline"></ion-icon>
       <ion-label position="stack">Start Time</ion-label>
-      <ion-datetime display-format="h:mm A" picker-format="h:mm A" placeholder = "Select Time"></ion-datetime>
+      <ion-datetime display-format="h:mm A" picker-format="h:mm A" placeholder = "Select Time" [(ngModel)] = "startTime"></ion-datetime>
     </ion-item>
 
     <ion-item lines = "full">
       <ion-icon name="time-outline"></ion-icon>
       <ion-label position="stack">End Time</ion-label>
-      <ion-datetime display-format="h:mm A" picker-format="h:mm A" placeholder = "Select Time"></ion-datetime>
+      <ion-datetime display-format="h:mm A" picker-format="h:mm A" placeholder = "Select Time" [(ngModel)] = "endTime"></ion-datetime>
     </ion-item>
 
     <ion-item lines = "full">
       <ion-icon name="location-outline"></ion-icon>
       <ion-label position="Stack">Location</ion-label>
-      <ion-input ></ion-input>
+      <ion-input type = "text" [(ngModel)] = "address"></ion-input>
     </ion-item>
     
     <ion-item lines = "full">
       <!-- <ion-label position="float">Description</ion-label> -->
-      <ion-textarea placeholder="Enter description for event" class="input-box" rows="6"></ion-textarea>
+      <ion-textarea placeholder="Enter description for event" class="input-box" rows="6" [(ngModel)] = "description"></ion-textarea>
     </ion-item>
   </ion-list>
 
   
   <div class="ion-padding">
-    <ion-button type="submit" class="ion-no-margin" shaoe = "round">Create Event</ion-button>
+    <ion-button  class="ion-no-margin" shaoe = "round" (click)="submit()">Create Event</ion-button>
   </div>
   
   
 </ion-content>
 
 
->>>>>>> ca0fc749fa3fb51ca138f74cd014a7177effd319
