@@ -6,6 +6,7 @@ import { FormsModule } from '@angular/forms';
 import { Tab1Page } from './tab1.page';
 import { ExploreContainerComponentModule } from '../explore-container/explore-container.module';
 
+
 @NgModule({
   imports: [
     IonicModule,
@@ -16,4 +17,5 @@ import { ExploreContainerComponentModule } from '../explore-container/explore-co
   ],
   declarations: [Tab1Page]
 })
-export class Tab1PageModule {}
+export class Tab1PageModule {
+}

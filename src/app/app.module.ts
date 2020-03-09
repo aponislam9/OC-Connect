@@ -11,6 +11,8 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
 import { SignInModalPageModule } from './sign-in-modal/sign-in-modal.module';
+import { NativeStorage } from '@ionic-native/native-storage/ngx';
+import { Md5 } from 'ts-md5/dist/md5';
 
 @NgModule({
   declarations: [AppComponent],
@@ -25,6 +27,8 @@ import { SignInModalPageModule } from './sign-in-modal/sign-in-modal.module';
   providers: [
     StatusBar,
     SplashScreen,
+    NativeStorage,
+    Md5,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],
   bootstrap: [AppComponent]
