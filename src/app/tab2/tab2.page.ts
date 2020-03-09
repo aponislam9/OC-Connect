@@ -9,9 +9,14 @@ import { Storage } from '@ionic/storage';
 })
 export class Tab2Page {
 
+  private selectedEvent = {
+    eventName: "EVENT_ID_TEST"
+  }
+
   constructor(private router: Router, private storage: Storage) {}
+  
 
   handleCardClick() {
-    this.router.navigateByUrl('/event-view');
+    this.router.navigateByUrl('/event-view/:' + this.selectedEvent.eventName);
   }
 }

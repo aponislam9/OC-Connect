@@ -7,20 +7,20 @@
 </ion-header>
 
 <ion-content [fullscreen]="true" class="event-container">
-
-  <ion-img class="event-banner" src="assets/img/Dunder_Mifflin.png"></ion-img>
+  
+  <ion-img class="event-banner" src={{event.banner}}></ion-img>
 
   <ion-card-header class="event-header">
-    <ion-card-title>{{eventDetails.title}}</ion-card-title>
+    <ion-card-title>{{event.title}}</ion-card-title>
     
     <ion-card-subtitle>
       <ion-icon class="icon" name="calendar-outline"></ion-icon>
-      <span class="text">{{eventDetails.time}}, {{eventDetails.date}}</span>
+      <span class="text">{{event.time}}, {{event.date}}</span>
     </ion-card-subtitle>
 
     <ion-card-subtitle>
       <ion-icon class="icon" name="map-outline"></ion-icon>
-      <span class="text">{{eventDetails.location}}</span>
+      <span class="text">{{event.location}}</span>
     </ion-card-subtitle>
   </ion-card-header>
 
@@ -44,21 +44,21 @@
     </ion-card-content>
   </ion-card>
 
-    <ion-card *ngFor="let user of userComments">
+    <ion-card *ngFor="let comment of event.comments">
       <ion-item lines="none" >
         <ion-avatar slot="start">
-          <img src={{user.picture}}>
+          <img src={{comment.user_info.picture}}>
         </ion-avatar>
         
         <ion-label class="comment-user-profile">
-          <h3>{{user.name}}</h3>
-          <p>{{user.commentTime}}</p>
+          <h3>{{comment.user_info.name}}</h3>
+          <p>{{comment.commentTime}}</p>
         </ion-label>
       </ion-item>
     
       <div class="comment-body">
-        <div class="comment-text">{{user.commentText}}</div>
-        <div *ngIf="user.subCommentCount > 0" class="other-comments-description" (click)="handleCommentClick()">{{user.subCommentCount}} others have replied...</div>
+        <div class="comment-text">{{comment.text}}</div>
+        <div *ngIf="comment.subComments.length > 0" class="other-comments-description" (click)="handleCommentClick()">{{comment.subComments.length}} others have replied...</div>
       </div>
 
       <ion-grid>

@@ -11,9 +11,10 @@ const routes: Routes = [
     loadChildren: () => import('./create-event/create-event.module').then( m => m.CreateEventPageModule)
   },
   {
-    path: 'event-view',
+    path: 'event-view/:event-id',
     loadChildren: () => import('./event-view/event-view.module').then( m => m.EventViewPageModule)
-  },  {
+  },
+  {
     path: 'comment-view',
     loadChildren: () => import('./comment-view/comment-view.module').then( m => m.CommentViewPageModule)
   },
