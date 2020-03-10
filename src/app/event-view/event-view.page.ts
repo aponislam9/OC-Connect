@@ -24,8 +24,6 @@ export class EventViewPage implements OnInit {
 
   private eventID: string; // Right now the ID is just the name of the event
 
-  private event_loaded = false;
-
   public event = {
     id: "",
     title: "",
@@ -37,8 +35,9 @@ export class EventViewPage implements OnInit {
     hashtags: [], // string[]
     comments: [] // comment[]
   }
-  private TEST_EVENT = {
-    id: "EVENT_ID_TEST",
+
+  public TEST_EVENT = {
+    id: ":EVENT_ID_TEST",
     title: "One Million Cups Presents: Dunder Mifflin",
     banner: "assets/img/Dunder_Mifflin.png",
     date: "Friday Jan 31",
@@ -52,6 +51,9 @@ export class EventViewPage implements OnInit {
   ngOnInit() {
     // We get this ID from Tab2. See routing changes to see how this is done
     this.eventID = this.route.snapshot.paramMap.get("event-id");
+    console.log("EVENT ID FROM THE SNAPSHOT");
+    console.log(this.route.snapshot.paramMap.get("event-id"));
+    this.event.id = this.eventID;
     console.log("EVENT ID --> " + this.eventID);
     this.loadEvent();
 
@@ -60,33 +62,44 @@ export class EventViewPage implements OnInit {
 
   }
 
-  private loadEvent() {
+  public loadEvent() {
     // USE THIS TO RESET THE DATABASE
-    // this.storage.set('all_events', [])
+ 
 
     this.storage.get('all_events').then((all_events) => {
       console.log("ALL_EVENTS: ");
       console.log(all_events);
 
-      if (all_events.length > 0) {
-        console.log("SOMETHING");
-        for (let event of all_events) {
-          if (event.id == this.eventID) {
-            this.transfer_event_details(event);
-            this.event_loaded = true;
+      if (all_events != null) {
+        if (all_events.length > 0) {
+          console.log("NOT NULL - CONTAINS ELEMENT");
+          for (let event of all_events) {
+            console.log(event.id);
+            console.log(this.eventID);
+  
+            if (event.id == this.eventID) {
+              console.log("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXx")
+              this.transfer_event_details(event);
+              console.log("PROMISE LOADED EVENT --> ");
+              console.log(this.event);
+            }
           }
+        } else {
+          console.log("NOT NULL - CONTAINS NO ELEMENTS");
+          all_events.push(this.TEST_EVENT);
+          this.storage.set('all_events', all_events)
         }
 
+
       } else {
-        console.log("NOTHING");
-        all_events.push(this.TEST_EVENT);
-        this.storage.set('all_events', all_events)
+        console.log("ALL EVENT == NULL");
+        this.storage.set('all_events', [])
       }
     });
   }
 
   // Idk if I have to actually do this, but it seems to be the only way to do it atm
-  private transfer_event_details(event) {
+  public transfer_event_details(event) {
     this.event.id = event.id;
     this.event.title = event.title;
     this.event.banner = event.banner;
