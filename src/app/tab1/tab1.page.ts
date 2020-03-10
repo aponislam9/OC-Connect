@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NativeStorage } from '@ionic-native/native-storage/ngx';
+import { Storage } from '@ionic/storage';
 import {Md5} from 'ts-md5/dist/md5';
 import { AlertController } from '@ionic/angular';
 
@@ -11,33 +11,56 @@ import { AlertController } from '@ionic/angular';
 })
 export class Tab1Page {
 
-  constructor(private nativeStorage: NativeStorage, private _md5: Md5, private alertCtrl: AlertController) {}
+  constructor(private storage: Storage, private _md5: Md5, private alertCtrl: AlertController) {}
+
   company: string;
-  date;
-  startTime;
-  endTime;
-  address: string;
+  title: string;
+  banner;
+  date: Date;
+  startTime: Date;
+  endTime: Date;
+  location: string;
   description: string;
-  eventName: string;
-  picture;
+
+  
+  public event = {
+    id: null,
+    company: "",
+    title: "",
+    banner: "",
+    date: null,
+    startTime: null,
+    endTime: null,
+    location: "",
+    description: "",
+    affiliatedOrganization: "",
+    hashtags: [], // string[]
+    comments: [] // comment[]
+  }
 
   submit() {
-    let uniqueId = Md5.hashStr(this.eventName);
-    this.nativeStorage.setItem(this.eventName, {id: uniqueId, company: this.company, date: this.date, startTime: this.startTime, address: this.address, description: this.description})
-    .then(async ()=>{
-      const alert = await this.alertCtrl.create({
-        header: 'Success',
-        message: 'Event was created successfully!',
-        buttons: ['Okay']
-      });
+    this.gatherInfo();
+    this.event.id = Md5.hashStr(this.event.title);
+    console.log(this.event);
+    this.storage.get("all-events").then(async(all_events) =>{
+        //uncomment this line to add to storage
+        // all_events.put(event);
+        const alert = await this.alertCtrl.create({
+          header: 'Success',
+          message: 'Event was created successfully!',
+          buttons: ['Okay']
+        });
+      await alert.present();
     });
-    this.nativeStorage.getItem(this.eventName).then(data => console.log(data));
-    // console.log(uniqueId);
-    // console.log(this.company);
-    // console.log(this.date);
-    // console.log(this.startTime);
-    // console.log(this.endTime);
-    // console.log(this.address);
-    // console.log(this.description);
+  }
+
+  gatherInfo() {
+    this.event.title = this.title;
+    this.event.company = this.company;
+    this.event.date = new Date(this.date),
+    this.event.startTime = new Date(this.startTime),
+    this.event.endTime = new Date(this.endTime),
+    this.event.description = this.description,
+    this.event.location = this.location
   }
 }
