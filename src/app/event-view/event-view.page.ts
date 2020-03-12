@@ -1,26 +1,26 @@
-import { Component, OnInit } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
-import { Storage } from '@ionic/storage';
+import { Component, OnInit } from "@angular/core";
+import { Router, ActivatedRoute } from "@angular/router";
+import { Storage } from "@ionic/storage";
 
-import { SignInModalPage } from '../sign-in-modal/sign-in-modal.page';
-import { ModalController, LoadingController } from '@ionic/angular';
+import { SignInModalPage } from "../sign-in-modal/sign-in-modal.page";
+import { ModalController, LoadingController } from "@ionic/angular";
 
-import { Camera } from '@ionic-native/Camera/ngx';
-import { File } from '@ionic-native/file/ngx';
+import { Camera } from "@ionic-native/Camera/ngx";
+import { File } from "@ionic-native/file/ngx";
 
 @Component({
-  selector: 'app-event-view',
-  templateUrl: './event-view.page.html',
-  styleUrls: ['./event-view.page.scss'],
+  selector: "app-event-view",
+  templateUrl: "./event-view.page.html",
+  styleUrls: ["./event-view.page.scss"]
 })
-
 export class EventViewPage implements OnInit {
-
-  constructor(private router: Router,
-              private route: ActivatedRoute,
-              private storage: Storage,
-              private modalController: ModalController,
-              public loadingController: LoadingController) {}
+  constructor(
+    private router: Router,
+    private route: ActivatedRoute,
+    private storage: Storage,
+    private modalController: ModalController,
+    public loadingController: LoadingController
+  ) {}
 
   private eventID: string; // Right now the ID is just the name of the event
 
@@ -34,7 +34,7 @@ export class EventViewPage implements OnInit {
     affiliatedOrganization: "",
     hashtags: [], // string[]
     comments: [] // comment[]
-  }
+  };
 
   public TEST_EVENT = {
     id: ":EVENT_ID_TEST",
@@ -46,7 +46,7 @@ export class EventViewPage implements OnInit {
     affiliatedOrganization: "",
     hashtags: [], // string[]
     comments: [] // comment[]
-  }
+  };
 
   ngOnInit() {
     // We get this ID from Tab2. See routing changes to see how this is done
@@ -59,14 +59,12 @@ export class EventViewPage implements OnInit {
 
     console.log("LOADED EVENT --> ");
     console.log(this.event);
-
   }
 
   public loadEvent() {
     // USE THIS TO RESET THE DATABASE
- 
 
-    this.storage.get('all_events').then((all_events) => {
+    this.storage.get("all_events").then(all_events => {
       console.log("ALL_EVENTS: ");
       console.log(all_events);
 
@@ -76,9 +74,9 @@ export class EventViewPage implements OnInit {
           for (let event of all_events) {
             console.log(event.id);
             console.log(this.eventID);
-  
+
             if (event.id == this.eventID) {
-              console.log("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXx")
+              console.log("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXx");
               this.transfer_event_details(event);
               console.log("PROMISE LOADED EVENT --> ");
               console.log(this.event);
@@ -87,13 +85,11 @@ export class EventViewPage implements OnInit {
         } else {
           console.log("NOT NULL - CONTAINS NO ELEMENTS");
           all_events.push(this.TEST_EVENT);
-          this.storage.set('all_events', all_events)
+          this.storage.set("all_events", all_events);
         }
-
-
       } else {
         console.log("ALL EVENT == NULL");
-        this.storage.set('all_events', [])
+        this.storage.set("all_events", []);
       }
     });
   }
@@ -111,25 +107,6 @@ export class EventViewPage implements OnInit {
     this.event.comments = event.comments;
   }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
   // Datebase structure
 
   // this.storage = {
@@ -137,8 +114,7 @@ export class EventViewPage implements OnInit {
   //   "all_events": [] // event[]
   // }
 
-
-  // JSON structure    
+  // JSON structure
 
   // user: {
   //   name: "",
@@ -170,7 +146,7 @@ export class EventViewPage implements OnInit {
   // }
 
   handleCommentClick() {
-    this.router.navigateByUrl('/comment-view');
+    this.router.navigateByUrl("/comment-view");
 
     // if (this.signed_in) {
     //   this.router.navigateByUrl('/comment-view');
@@ -182,7 +158,7 @@ export class EventViewPage implements OnInit {
 
   async openModal() {
     const modal = await this.modalController.create({
-      component: SignInModalPage,
+      component: SignInModalPage
       // componentProps: {
       //   custom_id: this.value
       // }
@@ -204,7 +180,6 @@ export class EventViewPage implements OnInit {
   //   slidesPerView: 3
   // }
 
-
   // user01 = {
   //   name: "Michael Johnson",
   //   picture: "assets/img/stock_1.jpg",
@@ -217,7 +192,7 @@ export class EventViewPage implements OnInit {
   //   commentTime: "Feb, 23 at 8:35 AM",
   //   commentText: "Elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Adipiscing elit, sed do eiusmod tempor",
   // }
-  
+
   // user03 = {
   //   name: "Kyle McKenen",
   //   picture: "assets/img/stock_3.jpg",
@@ -243,14 +218,14 @@ export class EventViewPage implements OnInit {
   //   sub_comments: [],
   //   subCommentCount: 0
   // }
-  
+
   // user3 = {
   //   name: "Kyle McKenen",
   //   picture: "assets/img/stock_3.jpg",
   //   commentTime: "Feb, 23 at 8:37 AM",
   //   commentText: "Ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea.",
   //   sub_comments: [],
-  //   subCommentCount: 0  
+  //   subCommentCount: 0
   // }
 
   // userComments = [this.user1, this.user2, this.user3]
