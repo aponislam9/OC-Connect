@@ -11,8 +11,13 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
 import { SignInModalPageModule } from './sign-in-modal/sign-in-modal.module';
-import { NativeStorage } from '@ionic-native/native-storage/ngx';
 import { Md5 } from 'ts-md5/dist/md5';
+
+import { Camera } from '@ionic-native/Camera/ngx';
+import { File } from '@ionic-native/file/ngx';
+import { ImageResizer} from '@ionic-native/image-resizer/ngx';
+
+
 
 @NgModule({
   declarations: [AppComponent],
@@ -27,8 +32,10 @@ import { Md5 } from 'ts-md5/dist/md5';
   providers: [
     StatusBar,
     SplashScreen,
-    NativeStorage,
     Md5,
+    Camera,
+    File,
+    ImageResizer,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],
   bootstrap: [AppComponent]
