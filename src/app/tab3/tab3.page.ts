@@ -33,7 +33,7 @@ export class Tab3Page {
     isGuest: ""
   };
 
-  public userTest = {
+  public userT = {
     name: "John Anteater",
     picture: "assets/img/testPic.png",
     email: "JohnA@gmail.com",
@@ -42,11 +42,11 @@ export class Tab3Page {
   };
 
   logOutUser() {
-    this.userTest.name = "Name";
-    this.userTest.picture = this.user.picture;
-    this.userTest.email = this.user.email;
-    this.userTest.password = this.user.password;
-    this.userTest.iGuest = this.user.isGuest;
+    this.userT.name = "Name";
+    this.userT.picture = this.user.picture;
+    this.userT.email = this.user.email;
+    this.userT.password = this.user.password;
+    this.userT.iGuest = this.user.isGuest;
   }
   /*
   public loadUser()

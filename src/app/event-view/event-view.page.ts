@@ -138,6 +138,7 @@ export class EventViewPage implements OnInit {
 
   // This is called every time someone clicks the "Submit" button on for a new comment
   public handleSubmitClick() {
+    this.openModal();
     if (this.enteredComment != "") {
       this.createComment();
       this.addCommentToEvent();
