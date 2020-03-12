@@ -38,9 +38,10 @@ export class EventViewPage implements OnInit {
   };
 
   // Will be removed once the app has a way of representing a "Logged in User"
-  public TEST_USER = {
-    name: "Michael Johnson",
-    picture: "assets/img/stock_1.jpg"
+  public user_info = {
+    name: "",
+    picture: "",
+    exist: false
   };
 
   // This local comment is used to add comments to the event. When the user
@@ -62,13 +63,7 @@ export class EventViewPage implements OnInit {
     // Use this to wipe the DB
     // this.storage.clear();
     // console.log("DB CLEARED");
-
-    this.storage.get("all_users").then(all_users => {
-      console.log("TEST 0 :: PRINTING ALL USERS ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::;")
-      for (let user of all_users) {
-        console.log(user);
-      }
-    });
+    this.getSignedInUser();
 
     // We get this ID from Tab2. See routing changes to see how this is done
     console.log("EVENT ID FROM THE SNAPSHOT");
@@ -77,6 +72,17 @@ export class EventViewPage implements OnInit {
     this.loadEvent();
     console.log("LOADED EVENT --> ");
     console.log(this.event);
+  }
+
+  getSignedInUser() {
+    this.storage.get("signed_in_user").then(signed_in_user => {
+      console.log("signed_in_user: ", signed_in_user);
+      if (signed_in_user != null) {
+        this.user_info.name = signed_in_user.name;
+        this.user_info.picture = signed_in_user.picture;
+        this.user_info.exist = true;
+      }
+    });
   }
 
   // This function is used to load an event from the Database using the event ID given to us via routing
@@ -120,22 +126,26 @@ export class EventViewPage implements OnInit {
 
   // This is called every time someone clicks the "Submit" button on for a new comment
   public handleSubmitClick() {
-    this.openModal();
-    if (this.enteredComment != "") {
-      this.createComment();
-      this.addCommentToEvent();
-      this.lookForHashtags();
-      this.updateEventInDB();
-      this.clearComment();
-      this.print_database();
+    if (this.user_info.exist) {
+      if (this.enteredComment != "") {
+        this.createComment();
+        this.addCommentToEvent();
+        this.lookForHashtags();
+        this.updateEventInDB();
+        this.clearComment();
+        this.print_database();
+      }
+    } else {
+      this.openModal();
+      this.getSignedInUser();
     }
   }
 
   // Use the information Provided to us to propulate the local comment with data
   public createComment() {
     this.comment.id = "COMMENT_ID_TEST"; // TODO: Add an actual ID
-    this.comment.user_info.name = this.TEST_USER.name; // this will have to change once a user profile is implemented
-    this.comment.user_info.picture = this.TEST_USER.picture; // this will have to change once a user profile is implemented
+    this.comment.user_info.name = this.user_info.name; // this will have to change once a user profile is implemented
+    this.comment.user_info.picture = this.user_info.picture; // this will have to change once a user profile is implemented
     this.comment.text = this.enteredComment; // Grabbed from the comment's text-field
     this.comment.commentTime = new Date().toLocaleString();
   }
@@ -222,6 +232,26 @@ export class EventViewPage implements OnInit {
     });
   }
 
+  handleCommentClick() {
+    if (this.user_info.exist) {
+      this.router.navigateByUrl("/comment-view");
+    } else {
+      this.openModal();
+      this.getSignedInUser();
+    }
+  }
+
+  async openModal() {
+    const modal = await this.modalController.create({
+      component: SignInModalPage
+      // componentProps: {
+      //   custom_id: this.value
+      // }
+    });
+    modal.present();
+  }
+}
+
   // Datebase structure
 
   // this.storage = {
@@ -264,25 +294,3 @@ export class EventViewPage implements OnInit {
   //   commentTime: "",
   //   subComments: [] // comment[]
   // }
-
-  handleCommentClick() {
-    this.router.navigateByUrl("/comment-view");
-
-    // if (this.signed_in) {
-    //   this.router.navigateByUrl('/comment-view');
-
-    // } else {
-    //   this.openModal()
-    // }
-  }
-
-  async openModal() {
-    const modal = await this.modalController.create({
-      component: SignInModalPage
-      // componentProps: {
-      //   custom_id: this.value
-      // }
-    });
-    modal.present();
-  }
-}
