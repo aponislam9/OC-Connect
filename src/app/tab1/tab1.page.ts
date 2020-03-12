@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { Storage } from '@ionic/storage';
 import {Md5} from 'ts-md5/dist/md5';
 import { AlertController } from '@ionic/angular';
+import * as moment from 'moment';
 
 
 @Component({
@@ -57,10 +58,10 @@ export class Tab1Page {
   gatherInfo() {
     this.event.title = this.title;
     this.event.company = this.company;
-    this.event.date = new Date(this.date),
-    this.event.startTime = new Date(this.startTime),
-    this.event.endTime = new Date(this.endTime),
-    this.event.description = this.description,
-    this.event.location = this.location
+    this.event.date = moment(this.date).format('MMM Do YYYY');
+    this.event.startTime = moment(this.startTime).format('LT');
+    this.event.endTime = moment(this.endTime).format('LT');
+    this.event.description = this.description;
+    this.event.location = this.location;
   }
 }

@@ -4,9 +4,7 @@ import { Storage } from "@ionic/storage";
 
 import { SignInModalPage } from "../sign-in-modal/sign-in-modal.page";
 import { ModalController, LoadingController } from "@ionic/angular";
-
-import { Camera } from "@ionic-native/Camera/ngx";
-import { File } from "@ionic-native/file/ngx";
+import { Md5 } from "ts-md5/dist/md5";
 
 @Component({
   selector: "app-event-view",
@@ -22,48 +20,77 @@ export class EventViewPage implements OnInit {
     public loadingController: LoadingController
   ) {}
 
-  private eventID: string; // Right now the ID is just the name of the event
+  private eventID: string; // Right now the ID is just the name of the event, probably remove later
 
+  public enteredComment = ""; // This changes when the user types into the comment's text-field
+
+  // This local event is used to render this event-view
+  // When a change is made to the local event, the database is updated to reflect the change
   public event = {
     id: "",
     title: "",
     banner: "",
     date: "",
-    time: "",
+    startTime: "",
+    endTime: "",
     location: "",
     affiliatedOrganization: "",
     hashtags: [], // string[]
     comments: [] // comment[]
   };
 
+  // Will be removed once Create Event page is implemented
   public TEST_EVENT = {
     id: ":EVENT_ID_TEST",
     title: "One Million Cups Presents: Dunder Mifflin",
     banner: "assets/img/Dunder_Mifflin.png",
     date: "Friday Jan 31",
-    time: "8:00AM",
+    startTime: "8:00 AM",
+    endTime: "10:00 AM",
     location: "5141 California Ave #250, Irvine CA 92617",
     affiliatedOrganization: "",
     hashtags: [], // string[]
     comments: [] // comment[]
   };
 
+  // Will be removed once the app has a way of representing a "Logged in User"
+  public TEST_USER = {
+    name: "Michael Johnson",
+    picture: "assets/img/stock_1.jpg"
+  };
+
+  // This local comment is used to add comments to the event. When the user
+  // makes a comment, this local object is populated with data. Then it is
+  // copied over into the local event object, then the database is updated
+  // to reflet the new comment
+  public comment = {
+    id: "",
+    user_info: {
+      name: "",
+      picture: ""
+    },
+    text: "",
+    commentTime: "",
+    subComments: [] // comment[]
+  };
+
   ngOnInit() {
+    // Use this to wipe the DB
+    // this.storage.clear();
+    // console.log("DB CLEARED");
+
     // We get this ID from Tab2. See routing changes to see how this is done
-    this.eventID = this.route.snapshot.paramMap.get("event-id");
     console.log("EVENT ID FROM THE SNAPSHOT");
     console.log(this.route.snapshot.paramMap.get("event-id"));
-    this.event.id = this.eventID;
-    console.log("EVENT ID --> " + this.eventID);
+    this.eventID = this.route.snapshot.paramMap.get("event-id"); // may not need this later
+    this.event.id = this.route.snapshot.paramMap.get("event-id");
     this.loadEvent();
-
     console.log("LOADED EVENT --> ");
     console.log(this.event);
   }
 
+  // This function is used to load an event from the Database using the event ID given to us via routing
   public loadEvent() {
-    // USE THIS TO RESET THE DATABASE
-
     this.storage.get("all_events").then(all_events => {
       console.log("ALL_EVENTS: ");
       console.log(all_events);
@@ -94,17 +121,122 @@ export class EventViewPage implements OnInit {
     });
   }
 
+  // This functon transfers the event details from the event we found in the DB to our local event
   // Idk if I have to actually do this, but it seems to be the only way to do it atm
   public transfer_event_details(event) {
     this.event.id = event.id;
     this.event.title = event.title;
     this.event.banner = event.banner;
     this.event.date = event.date;
-    this.event.time = event.time;
+    this.event.startTime = event.startTime;
+    this.event.endTime = event.endTime;
     this.event.location = event.location;
     this.event.affiliatedOrganization = event.affiliatedOrganization;
     this.event.hashtags = event.hashtags;
     this.event.comments = event.comments;
+  }
+
+  // This is called every time someone clicks the "Submit" button on for a new comment
+  public handleSubmitClick() {
+    if (this.enteredComment != "") {
+      this.createComment();
+      this.addCommentToEvent();
+      this.lookForHashtags();
+      this.updateEventInDB();
+      this.clearComment();
+      this.print_database();
+    }
+  }
+
+  // Use the information Provided to us to propulate the local comment with data
+  public createComment() {
+    this.comment.id = "COMMENT_ID_TEST"; // TODO: Add an actual ID
+    this.comment.user_info.name = this.TEST_USER.name; // this will have to change once a user profile is implemented
+    this.comment.user_info.picture = this.TEST_USER.picture; // this will have to change once a user profile is implemented
+    this.comment.text = this.enteredComment; // Grabbed from the comment's text-field
+    this.comment.commentTime = new Date().toLocaleString();
+  }
+
+  // This function adds the new comment to the event. Seems repetative, but for some reason
+  // its the only way that works..
+  public addCommentToEvent() {
+    this.event.comments.push({
+      id: this.comment.id,
+      user_info: {
+        name: this.comment.user_info.name,
+        picture: this.comment.user_info.picture
+      },
+      text: this.comment.text,
+      commentTime: this.comment.commentTime
+    });
+  }
+
+  // Use a regular expression to search for hashtags in the user's comment.
+  // Update the event's list of hashtags once found
+  public lookForHashtags() {
+    let regex = /(?:^|\s)(?:#)([a-zA-Z\d]+)/gm;
+    let hashtag;
+
+    while ((hashtag = regex.exec(this.comment.text))) {
+      if (!this.event.hashtags.includes(hashtag[0])) {
+        this.event.hashtags.push(hashtag[0]);
+      }
+    }
+  }
+
+  // Reset the local comment object so that a new comment can populate it later
+  public clearComment() {
+    // Clear the local comment variable
+    this.comment.id = "";
+    this.comment.user_info.name = "";
+    this.comment.user_info.picture = "";
+    this.comment.text = "";
+    this.comment.commentTime = "";
+    this.comment.subComments = [];
+
+    // Clear the text that the user typed into the text-area
+    this.enteredComment = "";
+  }
+
+  // Update the event we are looking at in the DB. Grabs the array for all_events,
+  // updates the array, then replace the array the DB has with the updated one
+  public updateEventInDB() {
+    this.storage.get("all_events").then(all_events => {
+      if (all_events != null) {
+        if (all_events.length > 0) {
+          console.log("UPDATING COMMENT - NOT NULL - CONTAINS ELEMENT");
+          for (let event_id in all_events) {
+            if (all_events[event_id].id == this.eventID) {
+              all_events[event_id] = this.event;
+            }
+          }
+          this.storage.set("all_events", all_events);
+        } else {
+          console.log("UPDATING COMMENT - NOT NULL - CONTAINS NO ELEMENTS");
+        }
+      } else {
+        console.log("UPDATING COMMENT - ALL EVENT == NULL");
+      }
+    });
+  }
+
+  // print all events from the DB
+  public print_database() {
+    this.storage.get("all_events").then(all_events => {
+      if (all_events != null) {
+        if (all_events.length > 0) {
+          console.log("UPDATING COMMENT - NOT NULL - CONTAINS ELEMENT");
+          console.log("PRINTING DATABASE....");
+          for (let event of all_events) {
+            console.log(event);
+          }
+        } else {
+          console.log("UPDATING COMMENT - NOT NULL - CONTAINS NO ELEMENTS");
+        }
+      } else {
+        console.log("UPDATING COMMENT - ALL EVENT == NULL");
+      }
+    });
   }
 
   // Datebase structure
@@ -112,6 +244,7 @@ export class EventViewPage implements OnInit {
   // this.storage = {
   //   "all_users": [], // user[]
   //   "all_events": [] // event[]
+  //   "signed_in_user": {user...}
   // }
 
   // JSON structure
@@ -125,14 +258,18 @@ export class EventViewPage implements OnInit {
   // }
 
   // event: {
-  //   baner: "",
+  //   id: null,
+  //   company: "",
   //   title: "",
-  //   date: "",
-  //   time: "",
+  //   banner: "",
+  //   date: null,
+  //   startTime: null,
+  //   endTime: null,
   //   location: "",
+  //   description: "",
   //   affiliatedOrganization: "",
-  //   hashtags: [],
-  //   commments: [] // comment[]
+  //   hashtags: [], // string[]
+  //   comments: [] // comment[]
   // }
 
   // comment: {
@@ -165,68 +302,4 @@ export class EventViewPage implements OnInit {
     });
     modal.present();
   }
-
-  // eventDetails = {
-  //   title: "1 Million Cups: Wing Pitch",
-  //   time: "8:00AM - 9:30AM",
-  //   date: "Feb 26",
-  //   location: "5141 California Ave #250, Irvine, CA 92617"
-  // }
-
-  // hashtags = ["#tech", "#marketing", "#pitch", "#finance", "#general", "#numbers", "#test"]
-
-  // sliderConfig = {
-  //   centeredSlides: false,
-  //   slidesPerView: 3
-  // }
-
-  // user01 = {
-  //   name: "Michael Johnson",
-  //   picture: "assets/img/stock_1.jpg",
-  //   commentTime: "Feb, 23 at 8:34 AM",
-  //   commentText: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea.",
-  // }
-  // user02 = {
-  //   name: "Jordan Stevens",
-  //   picture: "assets/img/stock_2.jpg",
-  //   commentTime: "Feb, 23 at 8:35 AM",
-  //   commentText: "Elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Adipiscing elit, sed do eiusmod tempor",
-  // }
-
-  // user03 = {
-  //   name: "Kyle McKenen",
-  //   picture: "assets/img/stock_3.jpg",
-  //   commentTime: "Feb, 23 at 8:37 AM",
-  //   commentText: "Ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea.",
-  // }
-
-  // userSubComments = [this.user01, this.user02, this.user03]
-
-  // user1 = {
-  //   name: "Michael Johnson",
-  //   picture: "assets/img/stock_1.jpg",
-  //   commentTime: "Feb, 23 at 8:34 AM",
-  //   commentText: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea.",
-  //   sub_comments: this.userSubComments,
-  //   subCommentCount: 3
-  // }
-  // user2 = {
-  //   name: "Jordan Stevens",
-  //   picture: "assets/img/stock_2.jpg",
-  //   commentTime: "Feb, 23 at 8:35 AM",
-  //   commentText: "Elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Adipiscing elit, sed do eiusmod tempor",
-  //   sub_comments: [],
-  //   subCommentCount: 0
-  // }
-
-  // user3 = {
-  //   name: "Kyle McKenen",
-  //   picture: "assets/img/stock_3.jpg",
-  //   commentTime: "Feb, 23 at 8:37 AM",
-  //   commentText: "Ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea.",
-  //   sub_comments: [],
-  //   subCommentCount: 0
-  // }
-
-  // userComments = [this.user1, this.user2, this.user3]
 }
