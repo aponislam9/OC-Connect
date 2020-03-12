@@ -20,8 +20,6 @@ export class EventViewPage implements OnInit {
     public loadingController: LoadingController
   ) {}
 
-  private eventID: string; // Right now the ID is just the name of the event, probably remove later
-
   public enteredComment = ""; // This changes when the user types into the comment's text-field
 
   // This local event is used to render this event-view
@@ -34,20 +32,6 @@ export class EventViewPage implements OnInit {
     startTime: "",
     endTime: "",
     location: "",
-    affiliatedOrganization: "",
-    hashtags: [], // string[]
-    comments: [] // comment[]
-  };
-
-  // Will be removed once Create Event page is implemented
-  public TEST_EVENT = {
-    id: ":EVENT_ID_TEST",
-    title: "One Million Cups Presents: Dunder Mifflin",
-    banner: "assets/img/Dunder_Mifflin.png",
-    date: "Friday Jan 31",
-    startTime: "8:00 AM",
-    endTime: "10:00 AM",
-    location: "5141 California Ave #250, Irvine CA 92617",
     affiliatedOrganization: "",
     hashtags: [], // string[]
     comments: [] // comment[]
@@ -79,11 +63,17 @@ export class EventViewPage implements OnInit {
     // this.storage.clear();
     // console.log("DB CLEARED");
 
+    this.storage.get("all_users").then(all_users => {
+      console.log("TEST 0 :: PRINTING ALL USERS ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::;")
+      for (let user of all_users) {
+        console.log(user);
+      }
+    });
+
     // We get this ID from Tab2. See routing changes to see how this is done
     console.log("EVENT ID FROM THE SNAPSHOT");
     console.log(this.route.snapshot.paramMap.get("event-id"));
-    this.eventID = this.route.snapshot.paramMap.get("event-id"); // may not need this later
-    this.event.id = this.route.snapshot.paramMap.get("event-id");
+    this.event.id = this.route.snapshot.paramMap.get("event-id").replace(":", ""); // part is hacky but is needed
     this.loadEvent();
     console.log("LOADED EVENT --> ");
     console.log(this.event);
@@ -92,31 +82,23 @@ export class EventViewPage implements OnInit {
   // This function is used to load an event from the Database using the event ID given to us via routing
   public loadEvent() {
     this.storage.get("all_events").then(all_events => {
-      console.log("ALL_EVENTS: ");
-      console.log(all_events);
+      console.log("ALL_EVENTS: ", all_events);
 
       if (all_events != null) {
+
         if (all_events.length > 0) {
           console.log("NOT NULL - CONTAINS ELEMENT");
           for (let event of all_events) {
+            console.log("TESTING ID")
             console.log(event.id);
-            console.log(this.eventID);
+            console.log(this.event.id);
 
-            if (event.id == this.eventID) {
-              console.log("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXx");
+            if (event.id == this.event.id) {
               this.transfer_event_details(event);
-              console.log("PROMISE LOADED EVENT --> ");
-              console.log(this.event);
+              console.log("LOADED EVENT", this.event);
             }
           }
-        } else {
-          console.log("NOT NULL - CONTAINS NO ELEMENTS");
-          all_events.push(this.TEST_EVENT);
-          this.storage.set("all_events", all_events);
         }
-      } else {
-        console.log("ALL EVENT == NULL");
-        this.storage.set("all_events", []);
       }
     });
   }
@@ -205,18 +187,18 @@ export class EventViewPage implements OnInit {
     this.storage.get("all_events").then(all_events => {
       if (all_events != null) {
         if (all_events.length > 0) {
-          console.log("UPDATING COMMENT - NOT NULL - CONTAINS ELEMENT");
+          console.log("UPDATING COMMENT - ALL_EVENTS CONTAINS ELEMENTS");
           for (let event_id in all_events) {
-            if (all_events[event_id].id == this.eventID) {
+            if (all_events[event_id].id == this.event.id) {
               all_events[event_id] = this.event;
             }
           }
           this.storage.set("all_events", all_events);
         } else {
-          console.log("UPDATING COMMENT - NOT NULL - CONTAINS NO ELEMENTS");
+          console.log("UPDATING COMMENT - ALL_EVENTS CONTAINS NO ELEMENTS");
         }
       } else {
-        console.log("UPDATING COMMENT - ALL EVENT == NULL");
+        console.log("UPDATING COMMENT - ALL_EVENTS == NULL");
       }
     });
   }
