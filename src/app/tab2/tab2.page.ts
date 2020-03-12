@@ -1,14 +1,13 @@
-import { Component } from '@angular/core';
-import { Router } from '@angular/router';
-import { Storage } from '@ionic/storage';
+import { Component } from "@angular/core";
+import { Router } from "@angular/router";
+import { Storage } from "@ionic/storage";
 
 @Component({
-  selector: 'app-tab2',
-  templateUrl: 'tab2.page.html',
-  styleUrls: ['tab2.page.scss']
+  selector: "app-tab2",
+  templateUrl: "tab2.page.html",
+  styleUrls: ["tab2.page.scss"]
 })
 export class Tab2Page {
-
   // When the page is initialized, load in dummy data
   ngOnInit() {
     // this.storage.clear();
@@ -18,12 +17,12 @@ export class Tab2Page {
 
   private selectedEvent = {
     eventName: "EVENT_ID_TEST"
-  }
+  };
 
   constructor(private router: Router, private storage: Storage) {}
-  
+
   handleCardClick() {
-    this.router.navigateByUrl('/event-view/:' + this.selectedEvent.eventName);
+    this.router.navigateByUrl("/event-view/:" + this.selectedEvent.eventName);
   }
 
   // Database Structure for Prototype
@@ -48,7 +47,7 @@ export class Tab2Page {
             password: "John123",
             iGuest: "false"
           }
-        ])
+        ]);
       }
     });
 
@@ -67,12 +66,14 @@ export class Tab2Page {
             hashtags: [], // string[]
             comments: [] // comment[]
           }
-        ])
+        ]);
       }
     });
 
     this.storage.get("signed_in_user").then(signed_in_user => {
-      if (signed_in_user == null) { this.storage.set("signed_in_user", null) }
+      if (signed_in_user == null) {
+        this.storage.set("signed_in_user", null);
+      }
     });
   }
 }
