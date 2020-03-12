@@ -15,7 +15,7 @@
     
     <ion-card-subtitle>
       <ion-icon class="icon" name="calendar-outline"></ion-icon>
-      <span class="text">{{event.time}}, {{event.date}}</span>
+      <span class="text">{{event.date}}, {{event.startTime}} - {{event.endTime}}</span>
     </ion-card-subtitle>
 
     <ion-card-subtitle>
@@ -31,7 +31,7 @@
 
   <div class="hashtag-container">
     <div class="scroll" scrollX="true">
-      <ion-chip *ngFor="let hashtag of hashtags" outline>
+      <ion-chip *ngFor="let hashtag of event.hashtags" outline>
         <ion-label>{{hashtag}}</ion-label>
       </ion-chip>
     </div>
@@ -39,25 +39,25 @@
 
   <ion-card class="submit-comment">
     <ion-card-content>
-      <ion-textarea autoGrow class="comment-field" placeholder="Leave a comment..."> </ion-textarea>
-      <ion-button slot="end" class="submit-button" size="default" fill="clear">Submit</ion-button>
+      <ion-textarea [(ngModel)]="enteredComment" autoGrow class="comment-field"  placeholder="Leave a comment..."> </ion-textarea>
+      <ion-button (click)="handleSubmitClick()" slot="end" class="submit-button" size="default" fill="clear">Submit</ion-button>
     </ion-card-content>
   </ion-card>
 
-    <ion-card *ngFor="let comment of event.comments">
+    <ion-card *ngFor="let current_comment of event.comments">
       <ion-item lines="none" >
         <ion-avatar slot="start">
-          <img src={{comment.user_info.picture}}>
+          <img src={{current_comment.user_info.picture}}>
         </ion-avatar>
         
-        <ion-label class="comment-user-profile">
-          <h3>{{comment.user_info.name}}</h3>
-          <p>{{comment.commentTime}}</p>
+        <ion-label class="current_comment-user-profile">
+          <h3>{{current_comment.user_info.name}}</h3>
+          <p>{{current_comment.commentTime}}</p>
         </ion-label>
       </ion-item>
     
       <div class="comment-body">
-        <div class="comment-text">{{comment.text}}</div>
+        <div class="comment-text">{{current_comment.text}}</div>
         <div *ngIf="comment.subComments.length > 0" class="other-comments-description" (click)="handleCommentClick()">{{comment.subComments.length}} others have replied...</div>
       </div>
 

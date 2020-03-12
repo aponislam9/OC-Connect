@@ -51,7 +51,7 @@ export class Tab1Page {
     this.gatherInfo();
     this.event.id = Md5.hashStr(this.event.title);
     console.log(this.event);
-    this.storage.get("all-events").then(async(all_events) =>{
+    this.storage.get("all_events").then(async(all_events) =>{
         //uncomment this line to add to storage
         // all_events.put(event);
         const alert = await this.alertCtrl.create({
