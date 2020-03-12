@@ -31,7 +31,7 @@ export class Tab2Page {
   // this.storage = {
   //   "all_users": [], // an array of user JSON objects
   //   "all_events": [] // an array of event JSON objects
-  //   "signed_in_user": {user...}
+  //   "signed_in_user": {user} // a SINGLE user JSON object
   // }
   ////////////////////////////////////
 
