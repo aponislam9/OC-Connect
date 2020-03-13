@@ -13,9 +13,9 @@ import { WebView } from '@ionic-native/ionic-webview/ngx';
 
 
 @Component({
-  selector: 'app-tab1',
-  templateUrl: 'tab1.page.html',
-  styleUrls: ['tab1.page.scss']
+  selector: "app-tab1",
+  templateUrl: "tab1.page.html",
+  styleUrls: ["tab1.page.scss"]
 })
 export class Tab1Page {
 
@@ -48,32 +48,32 @@ export class Tab1Page {
     affiliatedOrganization: "",
     hashtags: [], // string[]
     comments: [] // comment[]
-  }
+  };
 
   submit() {
     this.gatherInfo();
     this.event.id = Md5.hashStr(this.event.title);
     console.log(this.event);
-    this.storage.get("all_events").then(async(all_events) =>{
-        //uncomment this line to add to storage
-        // all_events.put(event);
-        const alert = await this.alertCtrl.create({
-          header: 'Success',
-          message: 'Event was created successfully!',
-          buttons: ['Okay']
-        });
+    this.storage.get("all_events").then(async all_events => {
+      //uncomment this line to add to storage
+      // all_events.put(event);
+      const alert = await this.alertCtrl.create({
+        header: "Success",
+        message: "Event was created successfully!",
+        buttons: ["Okay"]
+      });
       await alert.present();
     });
     this.buttonShow = true;
-    
+    this.restPage();
   }
 
   gatherInfo() {
     this.event.title = this.title;
     this.event.company = this.company;
-    this.event.date = moment(this.date).format('MMM Do YYYY');
-    this.event.startTime = moment(this.startTime).format('LT');
-    this.event.endTime = moment(this.endTime).format('LT');
+    this.event.date = moment(this.date).format("MMM Do YYYY");
+    this.event.startTime = moment(this.startTime).format("LT");
+    this.event.endTime = moment(this.endTime).format("LT");
     this.event.description = this.description;
     this.event.location = this.location;
   }
@@ -88,6 +88,16 @@ export class Tab1Page {
     this.endTime = null;
     this.location = "";
     this.description = "";
+    this.company = "";
+    this.title = "";
+    this.banner = "";
+    this.date = null;
+    this.startTime = null;
+    this.endTime = null;
+    this.location = "";
+    this.description = "";
+
+    srcURL = "";
   }
 
   async selectImage() {

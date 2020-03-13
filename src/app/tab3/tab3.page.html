@@ -13,12 +13,12 @@
 
 <ion-content [fullscreen]="true">
   <ion-avatar class="u">
-    <ion-img class="userpic" src="{{userTest.picture}}"></ion-img>
+    <ion-img class="userpic" src="{{U.picture}}"></ion-img>
     <!--<ion-icon name="person-circle-outline"></ion-icon>-->
   </ion-avatar>
 
   <p class="name">
-    {{userTest.name}}
+    {{U.name}}
   </p>
 
   <ion-button
@@ -27,6 +27,6 @@
     shape="round"
     (click)="logOutUser()"
   >
-    <ion-text class="logOut">Log Out</ion-text>
+    <ion-text class="logOut">{{btnStatus}}</ion-text>
   </ion-button>
 </ion-content>
