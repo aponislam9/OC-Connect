@@ -68,7 +68,9 @@ export class EventViewPage implements OnInit {
     // We get this ID from Tab2. See routing changes to see how this is done
     console.log("EVENT ID FROM THE SNAPSHOT");
     console.log(this.route.snapshot.paramMap.get("event-id"));
-    this.event.id = this.route.snapshot.paramMap.get("event-id").replace(":", ""); // part is hacky but is needed
+    this.event.id = this.route.snapshot.paramMap
+      .get("event-id")
+      .replace(":", ""); // part is hacky but is needed
     this.loadEvent();
     console.log("LOADED EVENT --> ");
     console.log(this.event);
@@ -91,11 +93,10 @@ export class EventViewPage implements OnInit {
       console.log("ALL_EVENTS: ", all_events);
 
       if (all_events != null) {
-
         if (all_events.length > 0) {
           console.log("NOT NULL - CONTAINS ELEMENT");
           for (let event of all_events) {
-            console.log("TESTING ID")
+            console.log("TESTING ID");
             console.log(event.id);
             console.log(this.event.id);
 
@@ -252,45 +253,45 @@ export class EventViewPage implements OnInit {
   }
 }
 
-  // Datebase structure
+// Datebase structure
 
-  // this.storage = {
-  //   "all_users": [], // user[]
-  //   "all_events": [] // event[]
-  //   "signed_in_user": {user...}
-  // }
+// this.storage = {
+//   "all_users": [], // user[]
+//   "all_events": [] // event[]
+//   "signed_in_user": {user...}
+// }
 
-  // JSON structure
+// JSON structure
 
-  // user: {
-  //   name: "",
-  //   picture: "",
-  //   email: "",
-  //   password: "",
-  //   isGuest: ""
-  // }
+// user: {
+//   name: "",
+//   picture: "",
+//   email: "",
+//   password: "",
+//   isGuest: ""
+// }
 
-  // event: {
-  //   id: null,
-  //   company: "",
-  //   title: "",
-  //   banner: "",
-  //   date: null,
-  //   startTime: null,
-  //   endTime: null,
-  //   location: "",
-  //   description: "",
-  //   affiliatedOrganization: "",
-  //   hashtags: [], // string[]
-  //   comments: [] // comment[]
-  // }
+// event: {
+//   id: null,
+//   company: "",
+//   title: "",
+//   banner: "",
+//   date: null,
+//   startTime: null,
+//   endTime: null,
+//   location: "",
+//   description: "",
+//   affiliatedOrganization: "",
+//   hashtags: [], // string[]
+//   comments: [] // comment[]
+// }
 
-  // comment: {
-  //   user_info: {
-  //     name: "",
-  //     picture: ""
-  //   },
-  //   text: "",
-  //   commentTime: "",
-  //   subComments: [] // comment[]
-  // }
+// comment: {
+//   user_info: {
+//     name: "",
+//     picture: ""
+//   },
+//   text: "",
+//   commentTime: "",
+//   subComments: [] // comment[]
+// }

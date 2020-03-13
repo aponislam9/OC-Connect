@@ -2,6 +2,7 @@ import { Component, OnInit } from "@angular/core";
 import { ModalController } from "@ionic/angular";
 import { Storage } from "@ionic/storage";
 import { AlertController } from "@ionic/angular";
+import { DisplayUserService } from "../services/display-user.service";
 
 @Component({
   selector: "app-sign-in-modal",
@@ -14,7 +15,8 @@ export class SignInModalPage implements OnInit {
   constructor(
     private modalController: ModalController,
     private storage: Storage,
-    private alertCtrl: AlertController
+    private alertCtrl: AlertController,
+    private displayuser: DisplayUserService
   ) {}
 
   public userTest = {
@@ -41,11 +43,19 @@ export class SignInModalPage implements OnInit {
               u.password == this.enteredpword
             ) {
               console.log("adding");
-              this.storage.set("signed_in_user", u.name);
+              this.storage.set("signed_in_user", {
+                name: u.name,
+                picture: u.picture,
+                email: u.email,
+                password: u.password,
+                iGuest: u.iGuest
+              });
               this.storage.get("signed_in_user").then(val => {
                 console.log(val);
               });
               this.modalController.dismiss();
+              this.displayuser.loadUser();
+              // this.displayuser.printUser();
             } else {
               console.log("not adding");
               this.tryAgain();
@@ -55,6 +65,9 @@ export class SignInModalPage implements OnInit {
           }
         }
       }
+      //else {
+      //   this.displayuser.loadUser();
+      // }
     });
   }
   async tryAgain() {
