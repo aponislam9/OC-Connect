@@ -19,9 +19,6 @@ import { ImageResizer} from '@ionic-native/image-resizer/ngx';
 import { ImagePicker } from '@ionic-native/image-picker/ngx';
 import { WebView } from '@ionic-native/ionic-webview/ngx';
 
-import { Camera } from "@ionic-native/Camera/ngx";
-import { File } from "@ionic-native/file/ngx";
-import { ImageResizer } from "@ionic-native/image-resizer/ngx";
 
 @NgModule({
   declarations: [AppComponent],
