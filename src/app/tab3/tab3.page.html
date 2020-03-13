@@ -4,29 +4,29 @@
       Settings
     </ion-title>
     <ion-buttons slot="end">
-      <ion-button (click)='presentPopover($event)'>
+      <ion-button (click)="presentPopover($event)">
         <ion-icon slot="icon-only" name="ellipsis-vertical"></ion-icon>
       </ion-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
-
 <ion-content [fullscreen]="true">
-  <ion-avatar class="user">
-    <ion-icon name="person-circle-outline"></ion-icon>
+  <ion-avatar class="u">
+    <ion-img class="userpic" src="{{U.picture}}"></ion-img>
+    <!--<ion-icon name="person-circle-outline"></ion-icon>-->
   </ion-avatar>
 
   <p class="name">
-    Ranim Chaaban
+    {{U.name}}
   </p>
 
-
-  <ion-button class="logOutButton" color="orange" shape="round">
-    <ion-text class="logOut">Log Out</ion-text>
+  <ion-button
+    class="logOutButton"
+    color="orange"
+    shape="round"
+    (click)="logOutUser()"
+  >
+    <ion-text class="logOut">{{btnStatus}}</ion-text>
   </ion-button>
-
-
-
-
 </ion-content>

@@ -9,7 +9,14 @@
 <ion-content fullscreen class = "content">
   <ion-list class = "input-fields">
 
-    <ion-img src="/assets/img/Dunder_Mifflin.png"></ion-img>
+    <div class = "ion-padding" *ngIf = "buttonShow == true">
+      <ion-button (click)="selectImage()" expand="block" shape="round" class = "imageBTN">
+        <ion-icon name="image-outline"></ion-icon>
+        Add an Image
+      </ion-button>
+    </div>
+    <ion-img *ngIf = "buttonShow == false" [src]=srcURL></ion-img>
+    
 
     <ion-item lines = "full">
       <ion-icon name="business-outline"></ion-icon>
@@ -18,10 +25,10 @@
 
     </ion-item>
 
-    <ion-item>
+    <ion-item lines = "full">
       <ion-icon name="terminal-outline"></ion-icon>
       <ion-label>Event Name</ion-label>
-      <ion-input required type="text" [(ngModel)]="eventName"></ion-input>
+      <ion-input required type="text" [(ngModel)]="title"></ion-input>
     </ion-item>
 
     <ion-item lines = "full">
@@ -45,7 +52,7 @@
     <ion-item lines = "full">
       <ion-icon name="location-outline"></ion-icon>
       <ion-label position="Stack">Location</ion-label>
-      <ion-input type = "text" [(ngModel)] = "address"></ion-input>
+      <ion-input type = "text" [(ngModel)] = "location"></ion-input>
     </ion-item>
     
     <ion-item lines = "full">
@@ -56,7 +63,7 @@
 
   
   <div class="ion-padding">
-    <ion-button  class="ion-no-margin" shaoe = "round" (click)="submit()">Create Event</ion-button>
+    <ion-button  class="ion-no-margin" shape = "round" (click)="submit()">Create Event</ion-button>
   </div>
   
   
