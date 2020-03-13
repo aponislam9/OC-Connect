@@ -75,9 +75,12 @@ export class EventViewPage implements OnInit {
   }
 
   getSignedInUser() {
+    console.log("TEST getSignedInUser");
     this.storage.get("signed_in_user").then(signed_in_user => {
+      console.log("TEST start");
       console.log("signed_in_user: ", signed_in_user);
       if (signed_in_user != null) {
+        console.log("TEST != null");
         this.user_info.name = signed_in_user.name;
         this.user_info.picture = signed_in_user.picture;
         this.user_info.exist = true;
