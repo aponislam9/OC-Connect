@@ -6,7 +6,6 @@ import * as moment from 'moment';
 import { Camera, CameraOptions } from '@ionic-native/Camera/ngx';
 import { File } from '@ionic-native/file/ngx';
 import { ImageResizer, ImageResizerOptions } from '@ionic-native/image-resizer/ngx';
-import { ImagePicker } from '@ionic-native/image-picker/ngx';
 import { WebView } from '@ionic-native/ionic-webview/ngx';
 
 
@@ -19,7 +18,7 @@ import { WebView } from '@ionic-native/ionic-webview/ngx';
 })
 export class Tab1Page {
 
-  constructor(private storage: Storage, private _md5: Md5, private alertCtrl: AlertController, private camera: Camera, private file: File, public actionSheetController: ActionSheetController, private imagePicker: ImagePicker, private webview: WebView) {}
+  constructor(private storage: Storage, private _md5: Md5, private alertCtrl: AlertController, private camera: Camera, private file: File, public actionSheetController: ActionSheetController, private webview: WebView) {}
 
   company: string;
   title: string;
@@ -64,7 +63,6 @@ export class Tab1Page {
       });
       await alert.present();
     });
-    this.buttonShow = true;
     this.restPage();
   }
 
@@ -96,8 +94,8 @@ export class Tab1Page {
     this.endTime = null;
     this.location = "";
     this.description = "";
-
-    srcURL = "";
+    this.srcURL = "";
+    this.buttonShow = true;
   }
 
   async selectImage() {
@@ -134,6 +132,7 @@ export class Tab1Page {
       await this.file.copyFile(tempBaseFilesystemPath, tempFilename, newBaseFileSystemPath, tempFilename);
       const storedPhoto = newBaseFileSystemPath + tempFilename;
       this.srcURL = this.webview.convertFileSrc(storedPhoto);
+      this.event.banner = this.srcURL;
     }, (err) => {
       // Handle error
     });
