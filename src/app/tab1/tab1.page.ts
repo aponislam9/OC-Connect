@@ -6,6 +6,10 @@ import * as moment from 'moment';
 import { Camera, CameraOptions } from '@ionic-native/Camera/ngx';
 import { File } from '@ionic-native/file/ngx';
 import { ImageResizer, ImageResizerOptions } from '@ionic-native/image-resizer/ngx';
+import { ImagePicker } from '@ionic-native/image-picker/ngx';
+import { WebView } from '@ionic-native/ionic-webview/ngx';
+
+
 
 
 @Component({
@@ -15,7 +19,7 @@ import { ImageResizer, ImageResizerOptions } from '@ionic-native/image-resizer/n
 })
 export class Tab1Page {
 
-  constructor(private storage: Storage, private _md5: Md5, private alertCtrl: AlertController, private camera: Camera, private file: File, public actionSheetController: ActionSheetController) {}
+  constructor(private storage: Storage, private _md5: Md5, private alertCtrl: AlertController, private camera: Camera, private file: File, public actionSheetController: ActionSheetController, private imagePicker: ImagePicker, private webview: WebView) {}
 
   company: string;
   title: string;
@@ -29,7 +33,6 @@ export class Tab1Page {
   srcURL = "";
 
   buttonShow = true;
-
 
   
   public event = {
@@ -61,6 +64,8 @@ export class Tab1Page {
         });
       await alert.present();
     });
+    this.buttonShow = true;
+    
   }
 
   gatherInfo() {
@@ -73,6 +78,18 @@ export class Tab1Page {
     this.event.location = this.location;
   }
 
+  restPage(){
+    this.event.id = "";
+    this.event.company = "";
+    this.event.title = "";
+    this.event.date = null;
+    this.event.banner = "";
+    this.event.startTime = null;
+    this.endTime = null;
+    this.location = "";
+    this.description = "";
+  }
+
   async selectImage() {
     const actionSheet = await this.actionSheetController.create({
       header: "Select Image source",
@@ -80,12 +97,6 @@ export class Tab1Page {
         text: 'Load from Library',
         handler: () => {
           this.pickImage(this.camera.PictureSourceType.PHOTOLIBRARY);
-        }
-      },
-      {
-        text: 'Use Camera',
-        handler: () => {
-          this.pickImage(this.camera.PictureSourceType.CAMERA);
         }
       },
       {
@@ -106,14 +117,17 @@ export class Tab1Page {
       encodingType: this.camera.EncodingType.JPEG,
       mediaType: this.camera.MediaType.PICTURE
     }
-    this.camera.getPicture(options).then((imageData) => {
-      this.srcURL = imageData;
-      this.event.banner = this.srcURL;
-      // imageData is either a base64 encoded string or a file URI
-      // If it's base64 (DATA_URL):
-      // let base64Image = 'data:image/jpeg;base64,' + imageData;
+    this.camera.getPicture(options).then(async (imageData) => {
+      const tempFilename = imageData.substr(imageData.lastIndexOf('/')+1);
+      const tempBaseFilesystemPath = imageData.substr(0, imageData.lastIndexOf('/') + 1);
+      const newBaseFileSystemPath = this.file.dataDirectory;
+      await this.file.copyFile(tempBaseFilesystemPath, tempFilename, newBaseFileSystemPath, tempFilename);
+      const storedPhoto = newBaseFileSystemPath + tempFilename;
+      this.srcURL = this.webview.convertFileSrc(storedPhoto);
     }, (err) => {
       // Handle error
     });
   }
+
+
 }
