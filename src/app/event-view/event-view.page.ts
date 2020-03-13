@@ -48,6 +48,8 @@ export class EventViewPage implements OnInit {
     comments: [] // comment[]
   }
 
+  
+
   ngOnInit() {
     // We get this ID from Tab2. See routing changes to see how this is done
     this.eventID = this.route.snapshot.paramMap.get("event-id");

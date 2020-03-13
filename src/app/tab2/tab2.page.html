@@ -21,8 +21,30 @@
     </ion-segment-button>
   </ion-segment>
 
+
+<!-- Main squeze of the page -->
+<ion-card *ngFor = "let info of ALL_EVENT" (click) = "handleCardClick()">
+  <img src = {{info.banner}}>
+
+  <ion-card-header>
+    <ion-card-subtitle>{{info.sponsor}} presents</ion-card-subtitle>
+    <ion-card-title>{{info.speaker}}</ion-card-title>
+  </ion-card-header>
+
+  <ion-card-content>
+    <ion-icon class="icon" name="calendar-outline"></ion-icon>
+    <span class="text">{{info.time}}, {{info.date}}</span>
+  </ion-card-content>
+
+  <ion-card-content>
+      <ion-icon class="icon" name="map-outline"></ion-icon>
+      <span class="text-location">{{info.location}}</span>
+  </ion-card-content>
+
+</ion-card>
+
   
-<ion-card (click)="handleCardClick()">
+<!-- <ion-card (click)="handleCardClick()">
   <img src ="assets/img/Dunder_Mifflin.png">
   <ion-card-header>
     <ion-card-subtitle>One Million Cups presents:</ion-card-subtitle>
@@ -48,7 +70,7 @@
   <ion-card-content>
     8724 Laurel Cyn #5, North Hollywood Ca 91608
   </ion-card-content>
-</ion-card>
+</ion-card> -->
 
 
 </ion-content>
