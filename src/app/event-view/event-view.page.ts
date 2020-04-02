@@ -59,6 +59,8 @@ export class EventViewPage implements OnInit {
     subComments: [] // comment[]
   };
 
+  
+
   ngOnInit() {
     // Use this to wipe the DB
     // this.storage.clear();
