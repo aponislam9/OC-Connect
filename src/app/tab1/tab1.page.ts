@@ -1,14 +1,15 @@
-import { Component } from "@angular/core";
-import { Storage } from "@ionic/storage";
-import { Md5 } from "ts-md5/dist/md5";
-import { AlertController, ActionSheetController } from "@ionic/angular";
-import * as moment from "moment";
-import { Camera, CameraOptions } from "@ionic-native/Camera/ngx";
-import { File } from "@ionic-native/file/ngx";
-import {
-  ImageResizer,
-  ImageResizerOptions
-} from "@ionic-native/image-resizer/ngx";
+import { Component } from '@angular/core';
+import { Storage } from '@ionic/storage';
+import {Md5} from 'ts-md5/dist/md5';
+import { AlertController, ActionSheetController } from '@ionic/angular';
+import * as moment from 'moment';
+import { Camera, CameraOptions } from '@ionic-native/Camera/ngx';
+import { File } from '@ionic-native/file/ngx';
+import { ImageResizer, ImageResizerOptions } from '@ionic-native/image-resizer/ngx';
+import { WebView } from '@ionic-native/ionic-webview/ngx';
+
+
+
 
 @Component({
   selector: "app-tab1",
@@ -16,14 +17,8 @@ import {
   styleUrls: ["tab1.page.scss"]
 })
 export class Tab1Page {
-  constructor(
-    private storage: Storage,
-    private _md5: Md5,
-    private alertCtrl: AlertController,
-    private camera: Camera,
-    private file: File,
-    public actionSheetController: ActionSheetController
-  ) {}
+
+  constructor(private storage: Storage, private _md5: Md5, private alertCtrl: AlertController, private camera: Camera, private file: File, public actionSheetController: ActionSheetController, private webview: WebView) {}
 
   company: string;
   title: string;
@@ -38,6 +33,7 @@ export class Tab1Page {
 
   buttonShow = true;
 
+  
   public event = {
     id: null,
     company: "",
@@ -67,6 +63,7 @@ export class Tab1Page {
       });
       await alert.present();
     });
+    this.restPage();
   }
 
   gatherInfo() {
@@ -79,26 +76,41 @@ export class Tab1Page {
     this.event.location = this.location;
   }
 
+  restPage(){
+    this.event.id = "";
+    this.event.company = "";
+    this.event.title = "";
+    this.event.date = null;
+    this.event.banner = "";
+    this.event.startTime = null;
+    this.endTime = null;
+    this.location = "";
+    this.description = "";
+    this.company = "";
+    this.title = "";
+    this.banner = "";
+    this.date = null;
+    this.startTime = null;
+    this.endTime = null;
+    this.location = "";
+    this.description = "";
+    this.srcURL = "";
+    this.buttonShow = true;
+  }
+
   async selectImage() {
     const actionSheet = await this.actionSheetController.create({
       header: "Select Image source",
-      buttons: [
-        {
-          text: "Load from Library",
-          handler: () => {
-            this.pickImage(this.camera.PictureSourceType.PHOTOLIBRARY);
-          }
-        },
-        {
-          text: "Use Camera",
-          handler: () => {
-            this.pickImage(this.camera.PictureSourceType.CAMERA);
-          }
-        },
-        {
-          text: "Cancel",
-          role: "cancel"
+      buttons: [{
+        text: 'Load from Library',
+        handler: () => {
+          this.pickImage(this.camera.PictureSourceType.PHOTOLIBRARY);
         }
+      },
+      {
+        text: 'Cancel',
+        role: 'cancel'
+      }
       ]
     });
     await actionSheet.present();
@@ -112,18 +124,19 @@ export class Tab1Page {
       destinationType: this.camera.DestinationType.FILE_URI,
       encodingType: this.camera.EncodingType.JPEG,
       mediaType: this.camera.MediaType.PICTURE
-    };
-    this.camera.getPicture(options).then(
-      imageData => {
-        this.srcURL = imageData;
-        this.event.banner = this.srcURL;
-        // imageData is either a base64 encoded string or a file URI
-        // If it's base64 (DATA_URL):
-        // let base64Image = 'data:image/jpeg;base64,' + imageData;
-      },
-      err => {
-        // Handle error
-      }
-    );
+    }
+    this.camera.getPicture(options).then(async (imageData) => {
+      const tempFilename = imageData.substr(imageData.lastIndexOf('/')+1);
+      const tempBaseFilesystemPath = imageData.substr(0, imageData.lastIndexOf('/') + 1);
+      const newBaseFileSystemPath = this.file.dataDirectory;
+      await this.file.copyFile(tempBaseFilesystemPath, tempFilename, newBaseFileSystemPath, tempFilename);
+      const storedPhoto = newBaseFileSystemPath + tempFilename;
+      this.srcURL = this.webview.convertFileSrc(storedPhoto);
+      this.event.banner = this.srcURL;
+    }, (err) => {
+      // Handle error
+    });
   }
+
+
 }
