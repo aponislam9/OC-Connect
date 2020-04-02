@@ -1,50 +1,95 @@
-.email {
-  width: 50%;
-  padding: 3%;
-  //padding: 10px;
+.md {
+  --highlight-height: 0;
 }
-
-.emailBox {
-  border-radius: 25px;
-  //width: 300px;
-  width: 200%;
-  border: 2px solid #333333;
-}
-
-.passBox {
-  border-radius: 25px;
-  width: 200%;
-  border: 2px solid #333333;
-}
-
-.password {
-  width: 50%;
-  padding: 3%;
-}
-
-.signInBtn {
-  margin: auto;
-  width: 50%;
-  padding-bottom: 5%;
-  padding-left: 10%;
-  padding-top: 3%;
-}
-
-.btnS {
-  color: white;
-}
-
-.signGuestBtn {
-  margin: auto;
-  width: 50%;
-  //padding: 10px;
-  padding-right: 60%;
+.ios {
+  --highlight-height: 0;
 }
 
 .btnG {
   color: white;
+  font-size: 80%;
 }
 
-.btnC {
-  color: white;
+.signInBtn {
+  width: 75%;
+  margin-left: auto;
+  margin-right: auto;
+  padding-top: 15%;
 }
+
+.btnS {
+  color: white;
+  font-size: 80%;
+}
+
+.logo {
+  height: 50px;
+  width: 50px;
+  display: block;
+  margin-left: 25%;
+  margin-right: auto;
+  margin-bottom: auto;
+}
+
+.signGuestBtn {
+  width: 75%;
+  margin-right: auto;
+  margin-left: auto;
+  padding-top: 3%;
+}
+
+// .email {
+//   width: 50%;
+//   padding: 3%;
+//   padding-top: 35px;
+// }
+
+// .emailBox {
+//   --highlight-height: 0;
+//   // border-radius: 25px;
+//   // //width: 300px;
+//   // width: 200%;
+//   // border: 2px solid #333333;
+// }
+
+// .passBox {
+//   border-radius: 25px;
+//   width: 200%;
+//   border: 2px solid #333333;
+// }
+
+// .password {
+//   width: 50%;
+//   padding: 3%;
+// }
+
+// .signInBtn {
+//   //margin: auto;
+
+//   width: 50%;
+//   padding-bottom: 5%;
+//   padding-left: 32%;
+//   padding-top: 15%;
+// }
+
+// .btnS {
+//   color: white;
+// }
+
+// .logo {
+//   height: 50px;
+//   width: 50px;
+//   display: block;
+//   margin-left: 25%;
+//   margin-right: auto;
+//   margin-bottom: auto;
+// }
+
+// .signGuestBtn {
+//   // margin: auto;
+//   width: 50%;
+//   //padding: 10px;
+//   padding-left: 15%;
+//   //padding-bottom: 10%;
+//   // padding-right: 60%;
+// }

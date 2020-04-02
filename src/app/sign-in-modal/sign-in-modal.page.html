@@ -1,13 +1,19 @@
 <ion-header>
   <ion-toolbar>
+    <ion-buttons slot="start" (click)="closeModal()">
+      <ion-back-button defaultHref="closeModal()"></ion-back-button>
+    </ion-buttons>
     <ion-title>
       <ion-img class="logo" src="/assets/logo/oc-connect-logo.png"></ion-img>
     </ion-title>
   </ion-toolbar>
 </ion-header>
-
 <ion-content>
-  <form>
+  <ion-item class="email">
+    <ion-label position="stacked">Email</ion-label>
+    <ion-input class="emailBox" [(ngModel)]="enteredemail"></ion-input>
+  </ion-item>
+  <!-- <form>
     <div class="email">
       <label for="email">EMAIL</label>
       <br />
@@ -19,35 +25,42 @@
         class="emailBox"
       ></ion-input>
 
-      <!--<input class="emailBox" type="text" ng-Model="enteredEmail" />-->
-    </div>
+    </div> -->
 
-    <div class="password">
-      <label for="password">PASSWORD</label>
-      <br />
-      <ion-input
-        type="password"
-        [(ngModel)]="enteredpword"
-        name="p"
-        class="passBox"
-      ></ion-input>
-      <!--<input class="passBox" type="text" />-->
-    </div>
-  </form>
+  <ion-item class="password">
+    <ion-label position="stacked">Password</ion-label>
+    <ion-input
+      class="emailBox"
+      [(ngModel)]="enteredpword"
+      type="password"
+    ></ion-input>
+  </ion-item>
+
+  <!-- <div class="password">
+    <label for="password">PASSWORD</label>
+    <br />
+    <ion-input
+      type="password"
+      [(ngModel)]="enteredpword"
+      name="p"
+      class="passBox"
+    ></ion-input>
+  </div> -->
+  <!-- </form> -->
   <div class="signInBtn">
-    <ion-button color="primary" (click)="updateSignInDB()">
+    <ion-button color="primary" (click)="updateSignInDB()" expand="block">
       <ion-text class="btnS">Sign in</ion-text>
     </ion-button>
   </div>
 
   <div class="signGuestBtn">
-    <ion-button color="primary">
+    <ion-button color="primary" expand="block">
       <ion-text class="btnG">Continue as guest</ion-text>
     </ion-button>
   </div>
 </ion-content>
 
-<ion-footer>
+<!-- <ion-footer>
   <ion-toolbar>
     <div>
       <ion-button expand="full" color="primary" (click)="closeModal()">
@@ -55,4 +68,4 @@
       </ion-button>
     </div>
   </ion-toolbar>
-</ion-footer>
+</ion-footer> -->
